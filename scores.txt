@@ -1,0 +1,7 @@
+Score Board:
+Player One: rose
+Wins: 0
+Player One: rose
+Wins: 0
+Player Two: linda
+Wins: 0
