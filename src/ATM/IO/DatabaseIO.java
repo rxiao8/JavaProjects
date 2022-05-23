@@ -8,7 +8,7 @@ import ATM.Database;
 import ATM.User;
 
 public class DatabaseIO {
-	public void readData(Database data, String filename) throws IllegalArgumentException {
+	public static void readData(Database data, String filename) throws IllegalArgumentException {
 		Scanner in;
 		try {
 			in = new Scanner(new File(filename));
@@ -22,13 +22,13 @@ public class DatabaseIO {
 		}
 	}
 
-	private User tokens(String token) {
+	private static User tokens(String token) {
 		User u = null;
 		String[] arr = token.split(",");
-		if (arr.length != 5) {
+		if (arr.length != 6) {
 			throw new IllegalArgumentException();
 		}
-		u = new User(arr[0], arr[1], arr[2], arr[3], Double.parseDouble(arr[4]));
+		u = new User(arr[0], arr[1], arr[2], arr[3], Double.parseDouble(arr[4]), arr[5]);
 		return u;
 	}
 }

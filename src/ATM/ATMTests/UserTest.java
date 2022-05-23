@@ -10,12 +10,10 @@ import ATM.Command;
 import ATM.Transaction;
 import ATM.User;
 import ATM.ATMcomparators.amountComparator;
-import ATM.ATMcomparators.typeComparator;
 
 public class UserTest {
 	// private timeDateComparator timeDate = new timeDateComparator();
 	private amountComparator amount = new amountComparator();
-	private typeComparator type = new typeComparator();
 	private String firstN = "Rose";
 	private String lastN = "Xiao";
 	private String validEmail = "rose@email";
@@ -24,6 +22,9 @@ public class UserTest {
 	private String invalidPhone1 = "333554444";
 	private String invalidPhone2 = "phone";
 	private String invalidPhone3 = "33355554444";
+	private String pin = "1234";
+	private String invalidPin = "12";
+	private String invalidPin2 = "12345";
 	private double deposit = 500;
 
 	/** The commands */
@@ -42,11 +43,12 @@ public class UserTest {
 
 	@Test
 	public void makeUser() {
-		User u = new User(firstN, lastN, validEmail, validPhone, deposit);
+		User u = new User(firstN, lastN, validEmail, validPhone, deposit, pin);
 		assertEquals("Rose", u.getFirst());
 		assertEquals("Xiao", u.getLast());
 		assertEquals("rose@email", u.getEmail());
 		assertEquals("3335554444", u.getPhone());
+		assertEquals("1234", u.getPin());
 		assertTrue(500 == u.getBalance());
 
 		u.addBalance(500);
@@ -66,9 +68,10 @@ public class UserTest {
 			assertEquals("Invalid phone format", e.getMessage());
 		}
 		try {
-			u.addBalance(-5);
+			u.setPin(invalidPin);
+			u.setPin(invalidPin2);
 		} catch (IllegalArgumentException e) {
-			assertEquals("Invalid amount", e.getMessage());
+			assertEquals("Invalid pin", e.getMessage());
 		}
 
 		u.addAct(oneT);
@@ -84,9 +87,9 @@ public class UserTest {
 
 		u.print(null);
 		u.print(amount);
-		// u.print(timeDate);
-		// fix the type comparator
-		u.print(type);
+
+		assertTrue(0 == u.getAcctNum());
+
 	}
 
 }

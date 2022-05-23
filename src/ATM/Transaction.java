@@ -68,15 +68,23 @@ public class Transaction implements Comparable<Transaction> {
 
 	}
 
-	// need to fix this
+	/**
+	 * Compares the Transactions based on their time and date.
+	 */
 	@Override
-	public int compareTo(Transaction t) {
+	public int compareTo(Transaction o2) {
+		if (this.getTimeDate().compareTo(o2.getTimeDate()) < 0) {
+			return -1;
+		}
+		if (this.getTimeDate().compareTo(o2.getTimeDate()) < 0) {
+			return 1;
+		}
 		return 0;
 	}
 
 	@Override
 	public String toString() {
-		String s = String.format("%15s %20s %40s", getType(), getAmount(), getTimeDate());
+		String s = String.format("%-15s %20s %40s", getType(), getAmount(), getTimeDate());
 		return s;
 	}
 

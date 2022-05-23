@@ -224,4 +224,24 @@ public class State {
 
 	}
 
+	// public void createTransaction(Command c, double amt, User user) {
+	// if (curr.getStateName().equalsIgnoreCase("withdrawl") ||
+	// curr.getStateName().equalsIgnoreCase("deposit")) {
+	// Transaction t = new Transaction(c, amt);
+	// user.addAct(t);
+	//
+	// }
+	// }
+	//
+	// /**
+	// * Prints the activities if the command is to print
+	// *
+	// * @param sort
+	// */
+	// public void printTransaction(Comparator<Transaction> c, User user) {
+	// if (curr.getStateName().equalsIgnoreCase("print")) {
+	// user.print(c);
+	// }
+	// }
+
 }

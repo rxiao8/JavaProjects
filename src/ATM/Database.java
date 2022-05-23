@@ -65,9 +65,10 @@ public class Database {
 	 * @param  u
 	 * @return
 	 */
-	public User retrieveUser(String first, String last) {
+	public User retrieveUser(String first, String last, String pin) {
 		for (User user : table) {
-			if (user.getFirst().equalsIgnoreCase(first) && user.getLast().equalsIgnoreCase(last)) {
+			if (user.getFirst().equalsIgnoreCase(first) && user.getLast().equalsIgnoreCase(last)
+					&& user.getPin().equalsIgnoreCase(pin)) {
 				return user;
 			}
 		}

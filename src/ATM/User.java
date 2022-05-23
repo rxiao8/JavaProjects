@@ -13,17 +13,19 @@ public class User {
 	private String last;
 	private String email;
 	private String phone;
-	// private int id;
+	private String pin;
+	private int accountNum;
 	// ordered by newest by default
 	private ArrayList<Transaction> activities;
 	private mergeSorter<Transaction> sorter = new mergeSorter<>();
 
-	public User(String first, String last, String email, String phone, double initDeposit) {
+	public User(String first, String last, String email, String phone, double initDeposit, String pin) {
 		setBalance(initDeposit);
 		setFirst(first);
 		setLast(last);
 		setEmail(email);
 		setPhone(phone);
+		setPin(pin);
 		activities = new ArrayList<Transaction>();
 
 	}
@@ -131,6 +133,32 @@ public class User {
 		this.phone = phone;
 	}
 
+	public void setPin(String pin) {
+		if (pin == null) {
+			throw new IllegalArgumentException("Invalid pin");
+		}
+		String regex = "[0-9]{4}";
+		Pattern pattern = Pattern.compile(regex);
+
+		Matcher matcher = pattern.matcher(pin);
+		if (!matcher.matches()) {
+			throw new IllegalArgumentException("Invalid pin");
+		}
+		this.pin = pin;
+	}
+
+	public String getPin() {
+		return pin;
+	}
+
+	public void setAcctNum(int acct) {
+		this.accountNum = acct;
+	}
+
+	public int getAcctNum() {
+		return accountNum;
+	}
+
 	/**
 	 * Adding an activity in descending order by time
 	 */
@@ -142,20 +170,13 @@ public class User {
 	public ArrayList<Transaction> getActivities() {
 		return activities;
 	}
-	// public void setID(int ID) {
-	// this.id = ID;
-	// }
-	//
-	// public int getID() {
-	// return id;
-	// }
 
 	/**
 	 * sort list of act. Converts from ArrayList to arrays and uses a comparator if
 	 * given
 	 */
 	public void print(Comparator<Transaction> c) {
-		String header = String.format(" %s | %15s | %30s  ", "Transaction Type", "Amount", "Time&Date");
+		String header = String.format(" %s | %15s | %30s  ", "Transaction Type", "Amount", "Time & Date");
 		System.out.println(header);
 		if (c != null) {
 			Transaction[] temp = activities.toArray(new Transaction[activities.size()]);
@@ -176,10 +197,12 @@ public class User {
 		}
 	}
 
+	/**
+	 * Adjusts the User's balance based on withdrawl or deposit
+	 * 
+	 * @param addAmt
+	 */
 	public void addBalance(double addAmt) {
-		if (addAmt <= 0) {
-			throw new IllegalArgumentException("Invalid amount");
-		}
 		balance += addAmt;
 	}
 
