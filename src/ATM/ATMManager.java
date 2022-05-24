@@ -11,9 +11,9 @@ import ATM.IO.DatabaseIO;
  * 
  * @author Rozie
  */
-public class Manager {
+public class ATMManager {
 	/** The single instance of manager */
-	private static Manager instance;
+	private static ATMManager instance;
 	/** The ATM state */
 	private State state;
 	/** Current user */
@@ -30,16 +30,20 @@ public class Manager {
 	public static int num = 0;
 
 	/** A private constructor of the manager to ensure the design pattern */
-	private Manager() {
+	private ATMManager() {
 		state = new State();
 		data = new Database();
 	}
 
-	public static Manager getInstance() {
+	public static ATMManager getInstance() {
 		if (instance == null) {
-			instance = new Manager();
+			instance = new ATMManager();
 		}
 		return instance;
+	}
+
+	public static String getNum() {
+		return String.valueOf(num);
 	}
 
 	/**
@@ -49,15 +53,16 @@ public class Manager {
 	 * @param  last
 	 * @return
 	 */
-	public User login(String first, String last, String pin) {
+	public boolean login(String first, String last, String pin) {
 		if (login) {
 			throw new IllegalAccessError("Currently logged in");
 		}
 		user = data.retrieveUser(first, last, pin);
 		if (user != null) {
 			login = true;
+			return true;
 		}
-		return user;
+		return false;
 	}
 
 	/**
@@ -108,18 +113,20 @@ public class Manager {
 	 * 
 	 * @param amt
 	 */
-	public void createTransaction(Command c, double amt) {
+	public boolean createTransaction(Command c, double amt) {
 		if (state.getStateName().equalsIgnoreCase("withdrawl") || state.getStateName().equalsIgnoreCase("deposit")) {
-			Transaction t = new Transaction(c, amt);
+			Transaction t = new Transaction(state.getCmd(), amt);
 			user.addAct(t);
+			boolean flag;
 			if (state.getStateName().equalsIgnoreCase("deposit")) {
-				user.addBalance(amt);
+				flag = user.addBalance(amt);
 			}
 			else {
-				user.addBalance(0 - amt);
+				flag = user.addBalance(0 - amt);
 			}
-
+			return flag;
 		}
+		return false;
 	}
 
 	/**

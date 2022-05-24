@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import ATM.Database;
+import ATM.ATMManager;
 import ATM.User;
 
 public class DatabaseIO {
@@ -25,10 +26,10 @@ public class DatabaseIO {
 	private static User tokens(String token) {
 		User u = null;
 		String[] arr = token.split(",");
-		if (arr.length != 6) {
+		if (arr.length != 5) {
 			throw new IllegalArgumentException();
 		}
-		u = new User(arr[0], arr[1], arr[2], arr[3], Double.parseDouble(arr[4]), arr[5]);
+		u = new User(arr[0], arr[1], arr[2], arr[3], Double.parseDouble(arr[4]), ATMManager.getNum());
 		return u;
 	}
 }

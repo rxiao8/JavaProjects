@@ -202,8 +202,12 @@ public class User {
 	 * 
 	 * @param addAmt
 	 */
-	public void addBalance(double addAmt) {
+	public boolean addBalance(double addAmt) {
+		if ((balance + addAmt) < 0) {
+			return false;
+		}
 		balance += addAmt;
+		return true;
 	}
 
 }

@@ -1,32 +1,32 @@
 package ATM.ATMTests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import ATM.ATMManager;
 import ATM.Command;
-import ATM.Manager;
 import ATM.User;
 import ATM.ATMcomparators.amountComparator;
 
 public class ManagerTest {
-	private Manager instance;
+	private ATMManager instance;
 
 	@Before
 	public void setUp() {
-		instance = Manager.getInstance();
+		instance = ATMManager.getInstance();
 		instance.clearData();
 
 	}
 
 	@Test
 	public void testManager() {
-		assertNull(instance.login("Rose", "Xiao", "1234"));
+		assertFalse(instance.login("Rose", "Xiao", "1234"));
 		instance.createUser("Rose", "Xiao", "rose@email", "6669994420", 500, "1234");
-		assertEquals("Rose", instance.login("Rose", "Xiao", "1234").getFirst());
+		assertTrue(instance.login("Rose", "Xiao", "1234"));
 		assertTrue(1 == instance.getSize());
 		User login = instance.getCurr();
 
